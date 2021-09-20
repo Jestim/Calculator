@@ -1,0 +1,17 @@
+Global variable to store first digit
+
+when button is clicked
+    if it is a digit
+        store the digit (concatinate)
+        update the display
+    else 
+        call the correct operator
+
+on operator input
+    check the text content
+        stor the first digit and operator
+        
+on equal button
+    get first digit and operator
+    get second digit
+    convert to numbers and call the right operator
