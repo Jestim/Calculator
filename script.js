@@ -10,14 +10,18 @@ buttons.forEach(button => {
 function checkInput(e) {
     const input = e.target.textContent;
     if (isNaN(input)) {
-        if (input == "C") {
-            // clearAll();
-        } else if (input == "=") {
-            // calculate();
-        } else if (input == ",") {
-            // comma();
-        } else {
-            storeOpAndDigit(input)
+        switch (input) {
+            case "=":
+                calculate();
+                break;
+            case ",":
+                // comma();
+                break;
+            case "C":
+                clearAll();
+                break;
+            default:
+                storeOpAndDigit(input);
         }
     } else {
         storeDigit(input);
@@ -49,4 +53,63 @@ function storeOpAndDigit(op) {
     previousDigit = currentDigit;
     currentDigit = "";
     updateDisplay();
+}
+
+
+function calculate() {
+    switch (operator) {
+        case "+":
+            currentDigit = add(Number(previousDigit), Number(currentDigit));
+            operator = "";
+            break;
+        case "-":
+            currentDigit = subtract(Number(previousDigit), Number(currentDigit));
+            operator = "";
+            break;
+        case "*":
+            currentDigit = multiply(Number(previousDigit), Number(currentDigit));
+            operator = "";
+            break;
+        case "/":
+            currentDigit = devide(Number(previousDigit), Number(currentDigit));
+            if (currentDigit == "ERROR") {
+                updateDisplay();
+                setTimeout(clearAll, 2000);
+            }
+            operator = "";
+            break;
+    }
+    updateDisplay();
+}
+
+function comma() {
+    // TODO
+}
+
+function clearAll() {
+    currentDigit = "";
+    previousDigit = "";
+    operator = "";
+    updateDisplay();
+}
+
+
+// Operator functions
+function add(a, b) {
+    return a + b;
+}
+
+function subtract(a, b) {
+    return a - b;
+}
+
+function multiply(a, b) {
+    return a * b;
+}
+
+function devide(a, b) {
+    if (b == 0) {
+        return "ERROR";
+    }
+    return Math.round(((a / b) + Number.EPSILON) * 100000) / 100000;
 }
